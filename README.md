@@ -7,6 +7,7 @@
 - [Introducing Dynamic Assignment Into Our structure](#introducing-dynamic-assignment-into-our-structure)
 - [Update Site.yml with Dynamic Assignments](#update-siteyml-with-dynamic-assignments)   
     - [Community Roles](#community-roles)
+- [Load Balancer Roles](#load-balancer-roles)
 
 ## Introduction
 In this project, we will introduce dynamic assignments by using 'include' module.
@@ -239,3 +240,13 @@ Results:
 ![git push](img/git-push.png)
 
 Now, that we are satisfied with our codes, we can create a Pull Request and merge it to main branch on GitHub.
+
+
+## Load Balancer Roles
+
+We want to be able to choose which Load Balancer to use, Nginx or Apache, so we need to have two roles respectively:
+
+1. Nginx
+2. Apache
+
+With our experience on Ansible it is best we use the ones available on Ansible Galaxy. We will be using the following roles:
