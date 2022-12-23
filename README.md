@@ -212,3 +212,30 @@ mv geerlingguy.mysql/ mysql
 Results:
 
 ![create mysql role](img/create-mysql-role.png)
+
+- Read readme.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website.
+
+```yaml
+mysql_root_home: /root
+mysql_root_username: root
+mysql_root_password: root
+```
+
+Results:
+
+![edit mysql role](img/edit-mysql-role.png)
+
+
+- Now it is time to upload the changes to GitHub. Run the following commands.
+
+```
+git add .
+git commit -m "add mysql role"
+git push --set-upstream origin roles-feature
+```
+
+Results:
+
+![git push](img/git-push.png)
+
+Now, that we are satisfied with our codes, we can create a Pull Request and merge it to main branch on GitHub.
