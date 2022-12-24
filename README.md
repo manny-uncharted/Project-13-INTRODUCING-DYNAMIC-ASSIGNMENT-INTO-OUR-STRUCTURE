@@ -250,3 +250,43 @@ We want to be able to choose which Load Balancer to use, Nginx or Apache, so we 
 2. Apache
 
 With our experience on Ansible it is best we use the ones available on Ansible Galaxy. We will be using the following roles:
+
+- Nginx_core : https://galaxy.ansible.com/nginxinc/nginx_core
+- Apache : https://galaxy.ansible.com/gautam43/apache_role_for_lb
+
+
+Note: Since we cannot use both Nginx and Apache load balancer, we need to add a condition to enable either one. We would be using variables to specify this.
+
+- Install the roles using the following commands.
+
+```
+ansible-galaxy install gautam43.apache_role_for_lb
+ansible-galaxy install nginxinc.nginx_core
+```
+
+Results:
+
+![install apache role](img/install-apache-role.png)
+
+- Commit and push the changes to GitHub.
+
+```
+git add .
+git commit -m "add apache and nginx roles"
+git push --set-upstream origin roles-feature
+```
+
+Results:
+
+![git push](img/git-push.png)
+
+- Declare a variable in 'defaults/main.yml' file of the apache role, the nginx role and set it to false.
+
+```yaml
+enable_nginx_lb: false
+enable_apache_lb: false
+```
+
+Results:
+
+![enable apache lb](img/enable-apache-lb.png)
