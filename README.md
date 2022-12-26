@@ -8,6 +8,8 @@
 - [Update Site.yml with Dynamic Assignments](#update-siteyml-with-dynamic-assignments)   
     - [Community Roles](#community-roles)
 - [Load Balancer Roles](#load-balancer-roles)
+- [Conclusion](#conclusion)
+- [Next Steps](#next-steps)
 
 ## Introduction
 In this project, we will introduce dynamic assignments by using 'include' module.
@@ -290,3 +292,72 @@ enable_apache_lb: false
 Results:
 
 ![enable apache lb](img/enable-apache-lb.png)
+
+![enable nginx lb](img/enable-nginx-lb.png)
+
+- We also need to declare another variable in 'defaults/main.yml' file of the apache role, the nginx role and set it to false.
+
+```yaml
+load_balancer_is_required: false
+```
+
+Results:
+
+![load balancer is required](img/load-balancer-is-required.png)
+
+- Create a 'loadbalancer.yml' file in 'static-assignments' directory and add the following code.
+
+```yaml
+- hosts: lb
+  roles:
+    - { role: nginx, when: enable_nginx_lb and load_balancer_is_required }
+    - { role: apache, when: enable_apache_lb and load_balancer_is_required }
+```
+
+Results:
+
+![load balancer yml](img/load-balancer-yml.png)
+
+- Now we need to update the 'site.yml' file to make use of the new variables. It should now look like this.
+
+```yaml
+- name: Load balancer assignment
+  import_playbook: ../static-assignments/load-balancer.yml
+  when: load_balancer_is_required
+```
+
+Results:
+
+![update site yml](img/update-site-yml-2.png)
+
+
+- Now, we can make use of 'env-vars/uat.yml' file to enable the load balancer. It should now look like this.
+
+```yaml
+enable_nginx_lb: true
+load_balancer_is_required: true
+```
+Note: This should work with both Apache and Nginx load balancer.
+
+Results:
+
+![enable nginx lb](img/enable-nginx-lb-2.png).
+
+
+## Conclusion
+Now we can commit the changes to git and push to GitHub and merge it into the main branch.
+
+```bash
+git add .
+git commit -m "add load balancer roles"
+git push --set-upstream origin roles-feature
+```
+
+Results:
+
+![git push](img/git-push-2.png)
+
+## Next Steps
+Now we can run tests for the environment and make sure everything is working as expected.
+
+
